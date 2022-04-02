@@ -64,6 +64,9 @@ python3 ./abecis.py
 
 > Note: When running for the first time, it will automatically download the pre-trained model, and will take some time.
 
+## Algorithm
+<img src="./media/algorithm.svg">
+
 ## User Manual
 
 Please follow the steps on the application precisely, and it should be intuitive. A detailed user guide video and documentation is coming soon.
