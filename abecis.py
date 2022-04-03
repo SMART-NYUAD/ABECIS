@@ -194,6 +194,46 @@ def analyseImage(foo, dir_path, thresholdLower, thresholdUpper, ResultPossibleFo
                     image_output_path_modified = image_output_path_modified.replace(
                         '.jpeg', '_mask.jpeg')
                     cv2.imwrite(image_output_path_modified, output)
+                    # Apply morphological thinning
+
+                    # Read the image as a grayscale image
+                    img = cv2.imread(image_output_path_modified, 0)
+
+                    # Threshold the image
+                    ret, img = cv2.threshold(img, 127, 255, 0)
+
+                    # Step 1: Create an empty skeleton
+                    size = np.size(img)
+                    skel = np.zeros(img.shape, np.uint8)
+
+                    # Get a Cross Shaped Kernel
+                    element = cv2.getStructuringElement(
+                        cv2.MORPH_CROSS, (3, 3))
+
+                    # Repeat steps 2-4
+                    while True:
+                        # Step 2: Open the image
+                        open_img = cv2.morphologyEx(
+                            img, cv2.MORPH_OPEN, element)
+                        # Step 3: Substract open from the original image
+                        temp = cv2.subtract(img, open_img)
+                        # Step 4: Erode the original image and refine the skeleton
+                        eroded = cv2.erode(img, element)
+                        skel = cv2.bitwise_or(skel, temp)
+                        img = eroded.copy()
+                        # Step 5: If there are no white pixels left ie.. the image has been completely eroded, quit the loop
+                        if cv2.countNonZero(img) == 0:
+                            break
+
+                    image_output_path_skel = image_output_path
+                    image_output_path_skel = image_output_path_skel.replace(
+                        '.png', '_length_estimation.png')
+                    image_output_path_skel = image_output_path_skel.replace(
+                        '.jpg', '_length_estimation.jpg')
+                    image_output_path_skel = image_output_path_skel.replace(
+                        '.jpeg', '_length_estimation.jpeg')
+                    cv2.imwrite(image_output_path_skel, skel)
+
                     # Get Metadata, and analyze the % Coverage
                     # open the image
                     date_taken = ""
@@ -223,6 +263,9 @@ def analyseImage(foo, dir_path, thresholdLower, thresholdUpper, ResultPossibleFo
                     number_of_black_pix = np.sum(output == 0)
                     crack_coverage = round(
                         ((number_of_white_pix/(number_of_white_pix+number_of_black_pix))*100), 2)
+
+                    # Get Crack Length
+                    crack_length = np.sum(skel == 255)
                     # Write results as text file
                     image_output_path_modified = image_output_path_modified.replace(
                         '.png', '_data.txt')
@@ -232,7 +275,7 @@ def analyseImage(foo, dir_path, thresholdLower, thresholdUpper, ResultPossibleFo
                         '.jpeg', '_data.txt')
                     f = open(image_output_path_modified, "w")
                     f.write(image_name+","+str(confidence_type)+","+str(date_taken)+",\"" +
-                            str(predicted_classes_names).strip('[]').replace('_', ' ').title()+"\","+str(int(max_score))+","+str(crack_coverage))
+                            str(predicted_classes_names).strip('[]').replace('_', ' ').title()+"\","+str(int(max_score))+","+str(crack_coverage)+","+str(crack_length))
                     f.close()
 
                 current_id += 1
@@ -459,7 +502,7 @@ class MainWindow(QWidget):
                 for images in os.listdir(folder_dir):
                     # check image types and process
                     if (images.endswith(".png") or images.endswith(".jpg") or images.endswith(".jpeg")):
-                        if("mask" not in images):
+                        if("mask" not in images and "length_estimation" not in images):
                             self.verificationImageFileList.append(images)
                 self.total_verification_images = len(
                     self.verificationImageFileList)
@@ -495,7 +538,7 @@ class MainWindow(QWidget):
                 for images in os.listdir(folder_dir):
                     # check image types and process
                     if (images.endswith(".png") or images.endswith(".jpg") or images.endswith(".jpeg")):
-                        if("mask" not in images):
+                        if("mask" not in images and "length_estimation" not in images):
                             self.verificationImageFileList.append(images)
                 self.total_verification_images = len(
                     self.verificationImageFileList)
@@ -552,7 +595,7 @@ class MainWindow(QWidget):
                 output_data += str(data_file.read()) + "\n"
                 data_file.close()
             f.write("Filename"+","+"Confidence Type"+","+"Date/Time Taken"+"," +
-                    "Crack Types"+","+"Maximum Confidence Score"+","+"Crack Coverage %\n"+output_data+"\nTotal Files:"+str(len(text_file_paths)))
+                    "Crack Types"+","+"Maximum Confidence Score"+","+"Crack Coverage %"+","+"Total Crack Length (pixels)"+"\n"+output_data+"\nTotal Files:"+str(len(text_file_paths)))
             f.close()
             # Open Report Containing Folder
             show_in_file_manager(os.path.join(self.dir_path, Report_Filename))
@@ -650,7 +693,7 @@ class MainWindow(QWidget):
     def initUI(self):
         # Set up UI and Method Bindings here
         self.resize(500, 800)
-        self.setWindowTitle('ABECIS v.1.0 - S.M.A.R.T. Construction Research Group')
+        self.setWindowTitle('ABECIS v.1.0 - S.M.A.R.T. Constructio (NYUAD)')
         # GUI Setup
         # Labels
         self.labelHelp = QLabel(
