@@ -693,7 +693,7 @@ class MainWindow(QWidget):
     def initUI(self):
         # Set up UI and Method Bindings here
         self.resize(500, 800)
-        self.setWindowTitle('ABECIS v.1.0 - S.M.A.R.T. Constructio (NYUAD)')
+        self.setWindowTitle('ABECIS v.1.0 - S.M.A.R.T. Construction Research Group')
         # GUI Setup
         # Labels
         self.labelHelp = QLabel(
