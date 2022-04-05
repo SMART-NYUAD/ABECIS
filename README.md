@@ -42,6 +42,12 @@ If there is no pip, and if you are on Linux, install using
 sudo apt install python3-pip
 ```
 
+Then, upgrade pip using
+
+```
+python3 -m pip install --upgrade pip
+```
+
 4. Install torch using
 
 ```
