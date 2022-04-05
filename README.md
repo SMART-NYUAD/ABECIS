@@ -54,7 +54,7 @@ pip3 install torch torchvision torchaudio
 python3 ./setup.py
 ```
 
-Here, on Windows, installation of detectron 2 might fail. In such case, install it from a local clone using
+Installation of detectron 2 might fail. In such case, install it from a local clone using
 
 ```
 git clone https://github.com/facebookresearch/detectron2.git
