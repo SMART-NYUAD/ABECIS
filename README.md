@@ -35,6 +35,8 @@ cd ABECIS
 python3 -m pip install --upgrade pip
 ```
 
+For Windows, pip should come with Python Installer. For macOS, if you don't have pip, follow https://www.geeksforgeeks.org/how-to-install-pip-in-macos/
+
 If there is no pip, and if you are on Linux, install using
 ```
 sudo apt install python3-pip
