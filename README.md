@@ -35,41 +35,35 @@ cd ABECIS
 python3 -m pip install --upgrade pip
 ```
 
-For Windows, pip should come with Python Installer. For macOS, if you don't have pip, follow https://www.geeksforgeeks.org/how-to-install-pip-in-macos/
-
-If there is no pip, and if you are on Linux, install using
-```
-sudo apt install python3-pip
-```
-
-Then, upgrade pip using
-
-```
-python3 -m pip install --upgrade pip
-```
-
 4. Install torch using
 
 ```
 pip3 install torch torchvision torchaudio
 ```
 
-5. Run the python script named **setup.py** using the following command, to set up the dependencies.
-
-```
-python3 ./setup.py
-```
-
-Installation of detectron 2 might fail. In such case, install it from a local clone using
+5. Install detectron2, the instance segmentation framework used by ABECIS
 
 ```
 git clone https://github.com/facebookresearch/detectron2.git
 python3 -m pip install -e detectron2
+```
+You might also need C++ Build Tools on Windows, get it [here](https://visualstudio.microsoft.com/visual-cpp-build-tools/)
+
+If there is any issue with pycocotools, get C++ build tools first, then install with 
+```
+pip install "git+https://github.com/philferriere/cocoapi.git#egg=pycocotools&subdirectory=PythonAPI"
+```
+
+
+6. Run the python script named **setup.py** using the following command, to set up the dependencies.
+
+```
 python3 ./setup.py
 ```
-Don't forget to rerun setup.py to install dependencies afterwards.
 
-6. If everything ran smoothly, run ABECIS by
+**[IMPORTANT]** Don't forget to rerun setup.py to install dependencies afterwards.
+
+7. If everything ran smoothly, run ABECIS by
 
 ```
 python3 ./abecis.py
@@ -77,7 +71,12 @@ python3 ./abecis.py
 
 > Note: When running for the first time, it will automatically download the pre-trained model, and will take some time.
 
+## Example Data for Testing
+
+Example data of wall cracks taken in lab using DJI Matrice 300 RTK drone is available [here](https://drive.google.com/drive/folders/1JAcw_7Kw_XL5GmNh1KUp9vH67yRvDQyM?usp=sharing)
+
 ## Algorithm
+
 <img src="./media/algorithm.svg">
 
 ## User Manual
