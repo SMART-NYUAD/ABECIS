@@ -17,6 +17,11 @@ This tool has been developed at [S.M.A.R.T. Construction Research Group](https:/
 
 ## Installation
 
+Before starting, have the sudo access using 
+```
+sudo -s
+```
+
 > For everything below, if 'python3' does not work, replace 'python3' with 'python'
 
 1. Download [Git](https://git-scm.com/) if you do not have it. And clone this repository using
