@@ -86,7 +86,7 @@ Example data of wall cracks taken in lab using DJI Matrice 300 RTK drone is avai
 
 ## Algorithm
 
-<img src="./media/algorithm.svg">
+<img src="./media/algorithm.png">
 
 ## User Manual
 
