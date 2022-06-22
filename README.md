@@ -11,6 +11,10 @@ A Free and Open-source **Automated Building Exterior Crack Inspection Software**
 
 This tool has been developed at [S.M.A.R.T. Construction Research Group](https://nyuad.nyu.edu/en/research/faculty-labs-and-projects/smart-construction-research-group.html) at New York University Abu Dhabi, as an extension to our previous conference paper published at [DOI:10.22260/ISARC2021/0086](http://dx.doi.org/10.22260/ISARC2021/0086)
 
+Find our current paper at 
+
+Ko, P., Prieto, S.A., & Garcia de Soto, B. (2022). [Developing a Free and Open-source Automated Building Exterior Crack Inspection Software for Construction and Facility Managers.](https://arxiv.org/abs/2206.09742) arXiv preprint arXiv:2206.09742.
+
 ![Running on Windows](./media/windows.png)
 
 ![Running on MacOS](./media/mac.png)
